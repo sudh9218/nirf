@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        select, button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select Colleges for Comparison</h2>
+    <form action="/compare_colleges" method="post">
+        <label for="selected_colleges">Select Colleges:</label>
+        <select name="selected_colleges" id="selected_colleges" multiple>
+            {% for college in colleges %}
+            <option value="{{ college }}">{{ college }}</option>
+            {% endfor %}
+        </select>
+        <label for="comparison_category">Comparison Category:</label>
+        <select name="comparison_category" id="comparison_category">
+            <option value="top_10">Top 10</option>
+            <option value="top_11_50">Top 11-50</option>
+            <option value="top_51_100">Top 51-100</option>
+        </select>
+        <button type="submit">Compare</button>
+    </form>
+</body>
+</html>

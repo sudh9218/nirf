@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .chart-container {
+            margin: auto;
+            width: 80%;
+            padding: 20px;
+        }
+        .insights {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Comparison Results</h2>
+
+    <h3>NIRF Colleges</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>College Name</th>
+                <th>Overall Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for college in nirf_data %}
+                {% if college[-2] != "N/A" %}
+                    <tr>
+                        <td>{{ college[1] }}</td>
+                        <td>{{ college[-2] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Registered Colleges</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>College Name</th>
+                <th>Overall Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for college in registered_data %}
+                {% if college[-2] != "N/A" %}
+                    <tr>
+                        <td>{{ college[1] }}</td>
+                        <td>{{ college[-2] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Insights</h3>
+    <div class="insights">
+        <p>{{ insights }}</p>
+    </div>
+
+    <h3>Visualization</h3>
+    <div class="image-container">
+        <img src="{{ image_url }}" alt="Visualization Graph">
+    </div>
+
+    <div class="button-container">
+        <form action="/insights" method="post">
+            <input type="hidden" name="nirf_data" value="{{ nirf_data|tojson }}">
+            <input type="hidden" name="registered_data" value="{{ registered_data|tojson }}">
+            <button type="submit">View Insights</button>
+        </form>
+    </div>
+</body>
+</html>
