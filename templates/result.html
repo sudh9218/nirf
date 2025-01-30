@@ -1,33 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparison Results</title>
+    <title>NIRF Ranking Prediction</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80');
+            /* Data analytics background */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            position: relative;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: -1;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+
+        .navbar {
+            background-color: #008080;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+        }
+
+        .header {
+            background-color: rgba(240, 248, 255, 0.8);
+            padding: 10px 0;
             text-align: center;
         }
-        th {
-            background-color: #f4f4f4;
+
+        .header h1 {
+            color: #008080;
         }
+
         .chart-container {
             margin: auto;
             width: 80%;
             padding: 20px;
         }
+
+        .footer {
+            background-color: rgba(240, 240, 240, 0.9);
+            color: #555;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
         .insights {
             margin-top: 20px;
             background-color: #f9f9f9;
@@ -35,75 +70,148 @@
             padding: 15px;
             border-radius: 8px;
         }
+
         .image-container {
             text-align: center;
             margin-top: 20px;
         }
+
         .button-container {
             margin-top: 20px;
             text-align: center;
         }
     </style>
 </head>
+
 <body>
-    <h2>Comparison Results</h2>
-
-    <h3>NIRF Colleges</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>College Name</th>
-                <th>Overall Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for college in nirf_data %}
-                {% if college[-2] != "N/A" %}
-                    <tr>
-                        <td>{{ college[1] }}</td>
-                        <td>{{ college[-2] }}</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <h3>Registered Colleges</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>College Name</th>
-                <th>Overall Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for college in registered_data %}
-                {% if college[-2] != "N/A" %}
-                    <tr>
-                        <td>{{ college[1] }}</td>
-                        <td>{{ college[-2] }}</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <h3>Insights</h3>
-    <div class="insights">
-        <p>{{ insights }}</p>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">NIRF Ranking Prediction</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/insights">Insights</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/comparison">Comparison</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <!-- Header -->
+        <div class="header">
+            <div class="container">
+                <h1>NIRF Ranking Prediction</h1>
+            </div>
+        </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header text-center">
+                    <h2>Comparison Results</h2>
+                    <h3>NIRF Colleges</h3>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>College Name</th>
+                                <th>Overall Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for college in nirf_data %}
+                            {% if college[-2] != "N/A" %}
+                            <tr>
+                                <td>{{ college[1] }}</td>
+                                <td>{{ college[-2] }}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <h3>Visualization</h3>
-    <div class="image-container">
-        <img src="{{ image_url }}" alt="Visualization Graph">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header text-center">
+                    <h3>Registered Colleges</h3>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>College Name</th>
+                                <th>Overall Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for college in registered_data %}
+                            {% if college[-2] != "N/A" %}
+                            <tr>
+                                <td>{{ college[1] }}</td>
+                                <td>{{ college[-2] }}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header text-center">
+                    <h3>Insights</h3>
+                </div>
+                <div class="insights">
+                    <p>{{ insights }}</p>
+                </div>
+            </div>
+        </div>
 
-    <div class="button-container">
-        <form action="/insights" method="post">
-            <input type="hidden" name="nirf_data" value="{{ nirf_data|tojson }}">
-            <input type="hidden" name="registered_data" value="{{ registered_data|tojson }}">
-            <button type="submit">View Insights</button>
-        </form>
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header text-center">
+                    <h3>Visualization</h3>
+                </div>
+                <div class="image-container">
+                    <img src="{{ image_url }}" alt="Visualization Graph">
+                </div>
+
+                <div class="button-container">
+                    <form action="/insights" method="post">
+                        <input type="hidden" name="nirf_data" value="{{ nirf_data|tojson }}">
+                        <input type="hidden" name="registered_data" value="{{ registered_data|tojson }}">
+                        <button type="submit">View Insights</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Kramah Software LLC. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Bootstrap 5 JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
